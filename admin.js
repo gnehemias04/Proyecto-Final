@@ -265,7 +265,7 @@ async function llamaUsuarios() {
                 ${e.nombre_usuario}
               </th>
               <td class="px-6 py-4">${e.nombre_completo}</td>
-              <td class="px-6 py-4">${e.nombre_completo}</td>
+              <td class="px-6 py-4">${e.correo}</td>
               <td class="px-6 py-4">${e.telefono}</td>
               <td class="px-6 py-4">${e.id_usuario}</td>
               <td class="px-6 py-4">${e.rol}</td>
@@ -283,6 +283,39 @@ async function llamaUsuarios() {
   }
 
   renderizarUsuarios();
+}
+// eliminando usuarios
+async function eliminarUsuario(id_usuario) {
+  const token = localStorage.getItem("token");
+
+  if (!confirm("¿Seguro que deseas eliminar este usuario?")) {
+    return;
+  }
+
+  try {
+    const respuesta = await fetch(
+      `https://funval-backend.onrender.com/usuarios/${id_usuario}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!respuesta.ok) {
+      throw new Error("Error al eliminar usuario");
+    }
+
+    alert("Usuario eliminado con éxito");
+
+    // Recargar lista después de eliminar
+    usuarios.innerHTML = ""; // Limpia el contenedor
+    llamaUsuarios();
+  } catch (error) {
+    console.error("Error eliminando usuario:", error);
+    alert("No se pudo eliminar el usuario" + error.message);
+  }
 }
 
 // garantiza que no va a trabarse
