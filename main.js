@@ -59,7 +59,10 @@ function renderizarProductos() {
       productos.innerHTML += `
         <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
           <a href="#">
-            <img class="rounded-t-lg" src="./prod/${producto.nombre.toLowerCase()}.png" alt="" />
+            <img class="rounded-t-lg" src="prod/${producto.nombre
+              .toLowerCase()
+              .replace(/\s+/g, "-")}.png"
+" alt="" />
           </a>
           <div class="p-5">
             <a href="#">
