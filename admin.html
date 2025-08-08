@@ -9,7 +9,7 @@
   </head>
   <body class="relative w-full h-screen bg-gray-100 text-gray-900">
     <!-- Modal de agregar productos -->
-     <div id="modal" class=" hidden absolute z-20 w-full h-screen bg-black/50 place-items-center place-content-center">
+     <div id="modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-20">
      <div class="mb-6 p-4 bg-gray-100 rounded-lg shadow-md">
     <div class="flex justify-between">
      <h2 class="text-lg font-bold mb-4">Agregar producto</h2>
@@ -57,8 +57,22 @@
   </div>
 </div>
 
-    <header class="w-full  flex flex-col justify-center items-center  bg-blue-900 text-white font-bold shadow-md">
-        <div class="flex items-center justify-center">
+ <!-- Modal detalles venta -->
+<div id="modal-detalles" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-20">
+  <div class="bg-white dark:bg-gray-800 p-6 rounded shadow-lg max-w-lg w-full relative">
+    <div class="flex justify-between">    
+    <h2 class="text-xl font-bold mb-4">Detalles de la Venta</h2>
+    <button id="cerrar-modal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">X</button>
+    </div>
+    <div id="contenido-detalles">
+    </div>
+  </div>
+</div>
+
+
+    <header class="w-full  flex flex-col justify-center items-center  bg-blue-900 text-white  shadow-md">
+      <div class="flex justify-between items-center w-full p-3">  
+      <div class="flex items-center justify-center">
         <img
           class="rounded-full w-[90px]"
           src="./img/Gemini_Generated_Image_1q80h61q80h61q80-Photoroom.png"
@@ -66,7 +80,9 @@
         />
         <h1 class="text-xl lg:text-2xl font-bold">Super Mercado Feliz</h1>
         </div>
-        <nav class="w-full justify-around flex pb-2">
+        <a href="./iniciar-sesion.html"><p class="text-sm ">Volver a Login</p></a>
+        </div>
+        <nav class="w-full justify-around flex pb-2 font-bold">
           <a href="#ventas" class="block px-4 py-2 rounded hover:bg-black/50"
             >💰 Ventas</a
           >
@@ -123,6 +139,7 @@
                 <th scope="col" class="px-6 py-3">Precio</th>
                 <th scope="col" class="px-6 py-3">Stock</th>
                 <th scope="col" class="px-6 py-3">Editar</th>
+                <th scope="col" class="px-6 py-3">Eliminar</th>
               </tr>
             </thead>
             <tbody id="productos-container"></tbody>

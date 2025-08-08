@@ -38,13 +38,72 @@ async function llamaVentas() {
               <td class="px-6 py-4">${e.fecha_venta}</td>
               <td class="px-6 py-4">${e.total}</td>
               <td class="px-6 py-4">
-              <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detalles</a>
+              <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline detalles-link""  data-id="${e.id_venta}">Detalles</a>
               </td>
             </tr>`;
+    });
+    document.querySelectorAll(".detalles-link").forEach((link) => {
+      link.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        const idVenta = ev.target.dataset.id;
+        const ventaSeleccionada = data.find((v) => v.id_venta == idVenta);
+        if (ventaSeleccionada) abrirModalDetalles(ventaSeleccionada);
+      });
     });
   }
   renderizarVentas();
 }
+
+// detalles de venta
+
+// Referencias al modal y su contenido
+const modalDetalles = document.getElementById("modal-detalles");
+const contenido = document.getElementById("contenido-detalles");
+const btnCerrar = document.getElementById("cerrar-modal");
+
+function abrirModalDetalles(venta) {
+  modalDetalles.classList.remove("hidden");
+
+  let detallesHtml = venta.detalles
+    .map(
+      (detalle) => `
+    <tr>
+      <td class="border px-2 py-1">${detalle.id_producto}</td>
+      <td class="border px-2 py-1">${detalle.cantidad}</td>
+      <td class="border px-2 py-1">$${detalle.precio_unitario.toFixed(2)}</td>
+      <td class="border px-2 py-1">$${detalle.subtotal.toFixed(2)}</td>
+    </tr>
+  `
+    )
+    .join("");
+
+  contenido.innerHTML = `
+    <p><strong>ID Venta:</strong> ${venta.id_venta}</p>
+    <p><strong>ID Usuario:</strong> ${venta.id_usuario}</p>
+    <p><strong>Fecha:</strong> ${new Date(
+      venta.fecha_venta
+    ).toLocaleString()}</p>
+    <p><strong>Total:</strong> $${venta.total.toFixed(2)}</p>
+
+    <table class="w-full border-collapse mt-4">
+      <thead>
+        <tr>
+          <th class="border px-2 py-1">ID Producto</th>
+          <th class="border px-2 py-1">Cantidad</th>
+          <th class="border px-2 py-1">Precio Unitario</th>
+          <th class="border px-2 py-1">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${detallesHtml}
+      </tbody>
+    </table>
+  `;
+}
+
+btnCerrar.addEventListener("click", () => {
+  modalDetalles.classList.add("hidden");
+});
 
 /*-----------TODO SOBRE PRODUCTOS--------------- */
 let btnAgregarProducto = document.querySelector("#btn-agregar");
@@ -285,16 +344,26 @@ async function llamaUsuarios() {
   renderizarUsuarios();
 }
 // eliminando usuarios
-async function eliminarUsuario(id_usuario) {
+
+async function eliminarUsuario(id) {
   const token = localStorage.getItem("token");
 
-  if (!confirm("¿Seguro que deseas eliminar este usuario?")) {
+  if (!token) {
+    alert("Debes iniciar sesión para eliminar usuarios");
     return;
   }
+  if (!id) {
+    alert("No se encontró el ID del usuario");
+    return;
+  }
+  const confirmacion = confirm("¿Seguro que querés eliminar este usuario?");
+  if (!confirmacion) return;
+
+  console.log("ID a eliminar:", id);
 
   try {
-    const respuesta = await fetch(
-      `https://funval-backend.onrender.com/usuarios/${id_usuario}`,
+    const res = await fetch(
+      `https://funval-backend.onrender.com/usuarios/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -303,18 +372,19 @@ async function eliminarUsuario(id_usuario) {
       }
     );
 
-    if (!respuesta.ok) {
-      throw new Error("Error al eliminar usuario");
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null);
+      const msgError = errorData?.detail || res.statusText;
+      throw new Error(msgError);
     }
 
     alert("Usuario eliminado con éxito");
 
-    // Recargar lista después de eliminar
-    usuarios.innerHTML = ""; // Limpia el contenedor
+    // Opcional: refrescar la lista de usuarios
+    usuarios.innerHTML = "";
     llamaUsuarios();
   } catch (error) {
-    console.error("Error eliminando usuario:", error);
-    alert("No se pudo eliminar el usuario" + error.message);
+    alert("Error al eliminar Usuario: " + error.message);
   }
 }
 

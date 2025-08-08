@@ -13,6 +13,7 @@ document
 
     login(usuario, contrasena); // Llamamos a la función con lo que escribió el usuario
   });
+
 /*------------------LOGIN----------------- */
 async function login(nombre_usuario, contraseña) {
   try {
@@ -28,9 +29,15 @@ async function login(nombre_usuario, contraseña) {
 
     if (respuesta.ok) {
       console.log("Login exitoso:", data.access_token);
+
+      // Guardamos el token
       localStorage.setItem("token", data.access_token);
-      window.location.href = "./index.html";
-      // Aquí podés redirigir, mostrar productos, etc.
+
+      // Obtenemos y guardamos datos del usuario logueado
+      await obtenerPerfilUsuario();
+
+      // Redirigimos
+      window.location.href = "./compras.html";
     } else {
       console.error("Error al hacer login:", data.detail || data.message);
       alert(data.detail || "Contraseña incorrecta o usuario no encontrado");
@@ -38,4 +45,31 @@ async function login(nombre_usuario, contraseña) {
   } catch (error) {
     console.error("Error de red:", error);
   }
+}
+
+/*------------------OBTENER PERFIL USUARIO----------------- */
+async function obtenerPerfilUsuario() {
+  const token = localStorage.getItem("token");
+
+  const respuesta = await fetch(
+    "https://funval-backend.onrender.com/usuarios/me/perfil",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!respuesta.ok) {
+    console.error("Error al obtener el perfil");
+    return;
+  }
+
+  const perfil = await respuesta.json();
+
+  // Guarda los datos que quieras en localStorage
+  localStorage.setItem("usuarioId", perfil.id_usuario);
+  localStorage.setItem("nombreUsuario", perfil.nombre_usuario);
+
+  console.log("Perfil guardado en localStorage:", perfil);
 }
