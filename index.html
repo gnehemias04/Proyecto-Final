@@ -4,7 +4,111 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Proyecto final</title>
-    <script src="./main.js" defer type="module"></script>
+    <script src="./main.js" defer></script>
+    <link rel="stylesheet" href="./output.css" />
   </head>
-  <body></body>
+  <body class="h-screen w-full">
+    <header class="bg-blue-900 w-full h-[10%] flex items-center justify-around">
+      <img
+        class="rounded-full h-[160px]"
+        src="./img/Gemini_Generated_Image_1q80h61q80h61q80-Photoroom.png"
+        alt=""
+      />
+      <a href="./iniciar-sesion.html"
+        ><p class="text-white">Iniciar Sesion</p></a
+      >
+    </header>
+    <main class="w-full min-h-[70%]">
+      <!-- Hero section -->
+      <section
+        class="hero-section scroll-smooth flex overflow-x-scroll w-full mt-2 gap-2 p-1 mx-0"
+      >
+        <img
+          class="snap-start w-full h-64 sm:h-80 md:h-[400px] lg:hidden object-cover rounded-lg shadow-md"
+          src="./img/hero section.png"
+          alt=""
+        />
+        <img
+          class="snap-start w-full h-64 sm:h-80 md:h-[400px] lg:hidden object-cover rounded-lg shadow-md"
+          src="./img/bebidas y lacteos.png"
+          alt=""
+        />
+        <img
+          class="snap-start w-full h-64 sm:h-80 md:h-[400px] lg:hidden object-cover rounded-lg shadow-md"
+          src="./img/panaderia y fiambreria.png"
+          alt=""
+        />
+        <img
+          class="snap-start hidden lg:flex w-full rounded-lg shadow-md"
+          src="./img/hero-section-lg.png"
+          alt=""
+        />
+        <img
+          class="snap-start hidden lg:flex w-full rounded-lg shadow-md"
+          src="./img/bebidas-lg.png"
+          alt=""
+        />
+        <img
+          class="snap-start hidden lg:flex w-full rounded-lg shadow-md"
+          src="./img/fiambreria-panaderia-lg.png"
+          alt=""
+        />
+      </section>
+      <!-- Buscador y Filtros -->
+      <section class="buscador mt-10 mb-6 px-4">
+        <div class="flex flex-wrap justify-center items-center gap-4">
+          <input
+            type="text"
+            id="buscadorInput"
+            placeholder="Buscar producto por nombre"
+            class="px-4 py-2 bg-white text-black dark:bg-gray-800 dark:text-white rounded-md w-full max-w-md border-1 border-gray-200 dark:border-gray-800 focus:outline-none focus:ring-1 focus:ring-white"
+          />
+          <div class="flex justify-center items-center gap-4">
+            <select
+              id="categorias"
+              class="bg-white text-black dark:bg-gray-800 dark:text-white p-2 rounded-md"
+            >
+              <option value="todas">Categoría</option>
+              <option value="Abarrotes">Abarrotes</option>
+              <option value="Lácteos">Lácteos</option>
+              <option value="Panadería">Panadería</option>
+              <option value="Carnes">Carnes</option>
+              <option value="Conservas">Conservas</option>
+              <option value="Frutas">Frutas</option>
+              <option value="Bebidas">Bebidas</option>
+              <option value="comida">Comida</option>
+              <option value="Dulces">Dulces</option>
+              <option value="Higiene">Higiene</option>
+              <option value="Limpieza">Limpieza</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      <!-- Catalogo de Productos -->
+      <section
+        id="productos-container"
+        class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-10 place-self-center"
+      ></section>
+      <!-- Navegación -->
+      <div class="flex justify-center gap-4 mb-12 flex-wrap">
+        <button
+          id="anterior"
+          class="px-4 py-2 rounded bg-blue-700 hover:bg-blue-900 transition disabled:opacity-50 cursor-pointer"
+        >
+          Anterior
+        </button>
+        <button
+          id="siguiente"
+          class="px-4 py-2 rounded bg-blue-700 hover:bg-blue-900 transition cursor-pointer"
+        >
+          Siguiente
+        </button>
+      </div>
+    </main>
+    <footer
+      class="w-full h-[20%] bg-black text-white flex justify-center items-center"
+    >
+      Copyright © 2025 Mercado Feliz. Todos los derechos reservados.
+    </footer>
+  </body>
 </html>

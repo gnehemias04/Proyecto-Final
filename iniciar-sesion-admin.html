@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto final</title>
+    <link rel="stylesheet" href="./output.css" />
+    <script src="./login-admin.js" defer></script>
+  </head>
+  <body class="h-screen w-screen">
+    <header class="bg-blue-900 w-full h-[10%] flex items-center justify-center">
+      <img
+        class="rounded-full h-[160px]"
+        src="./img/Gemini_Generated_Image_1q80h61q80h61q80-Photoroom.png"
+        alt=""
+      />
+    </header>
+    <main
+      class="w-full min-h-[70%] bg-[url(/img/carrito-lleno.jpeg)] bg-cover bg-center flex justify-center items-center"
+    >
+      <section
+        class="bg-white/50 p-4 rounded-2xl h-[70%] w-[70%] md:w-[60%] lg:w-[40%]"
+      >
+        <form
+          id="formulario-login"
+          class="bg-black/70 p-4 rounded-2xl flex flex-col gap-4 h-full justify-center items-center"
+        >
+          <h2 class="text-xl md:text-2xl lg:text-3xl font-bold text-white">
+            Inicio de Sesion Aministrador
+          </h2>
+          <p class="text-white lg:text-xl">Usuario</p>
+          <input
+            type="text"
+            id="usuario"
+            placeholder="Usuario"
+            class="bg-white rounded-sm w-[50%] p-1"
+          />
+          <p class="text-white lg:text-xl">Contrasenha</p>
+          <input
+            type="password"
+            id="contrasena"
+            placeholder="Contraseña"
+            class="bg-white rounded-sm w-[50%] p-1"
+          />
+          <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Iniciar sesión
+          </button>
+
+          <a href="./iniciar-sesion.html"><p class="text-white">Volver</p></a>
+        </form>
+      </section>
+    </main>
+    <footer
+      class="w-full h-[20%] bg-black text-white flex justify-center items-center"
+    >
+      Copyright © 2025 Mercado Feliz. Todos los derechos reservados.
+    </footer>
+  </body>
+</html>

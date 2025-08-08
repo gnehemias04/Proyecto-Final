@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <link rel="stylesheet" href="./output.css" />
+    <script src="./admin.js" defer></script>
+  </head>
+  <body class="relative w-full h-screen bg-gray-100 text-gray-900">
+    <!-- Modal de agregar productos -->
+     <div id="modal" class=" hidden absolute z-20 w-full h-screen bg-black/50 place-items-center place-content-center">
+     <div class="mb-6 p-4 bg-gray-100 rounded-lg shadow-md">
+    <div class="flex justify-between">
+     <h2 class="text-lg font-bold mb-4">Agregar producto</h2>
+     <button id="x" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">X</button>
+     </div>
+     <form id="agregar-producto" class="grid grid-cols-2 gap-4">
+     <input type="text" id="nombre" placeholder="Nombre" class="border p-2 rounded" required>
+     <input type="text" id="descripcion" placeholder="Descripción" class="border p-2 rounded" required>
+     <input type="text" id="categoria" placeholder="Categoría" class="border p-2 rounded" required>
+     <input type="number" step="0.01" id="precio" placeholder="Precio" class="border p-2 rounded" required>
+     <input type="number" id="stock" placeholder="Stock" class="border p-2 rounded" required>
+     <input type="number" id="id_producto" placeholder="Id" class="border p-2 rounded" required>
+     <button type="submit" class="col-span-2 bg-blue-700 text-white py-2 rounded hover:bg-blue-900">
+      Guardar producto
+     </button>
+     </form>
+    </div>
+    </div>
+    <!-- Modal para editar productos  -->
+    <div id="editar-producto" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-20">
+    <div class="bg-gray-100 rounded shadow-md max-w-lg w-full p-6 mx-4">
+    <h3 class="text-lg font-bold mb-4">Editar Producto</h3>
+    <form id="form-editar-producto">
+      <input type="hidden" id="editar-id_producto" />
+      
+      <label for="editar-nombre" class="block font-semibold mb-1">Nombre</label>
+      <input type="text" id="editar-nombre" class="border p-2 rounded w-full mb-3" required />
+      
+      <label for="editar-descripcion" class="block font-semibold mb-1">Descripción</label>
+      <input type="text" id="editar-descripcion" class="border p-2 rounded w-full mb-3" required />
+      
+      <label for="editar-categoria" class="block font-semibold mb-1">Categoría</label>
+      <input type="text" id="editar-categoria" class="border p-2 rounded w-full mb-3" required />
+      
+      <label for="editar-precio" class="block font-semibold mb-1">Precio</label>
+      <input type="number" step="0.01" id="editar-precio" class="border p-2 rounded w-full mb-3" required />
+      
+      <label for="editar-stock" class="block font-semibold mb-1">Stock</label>
+      <input type="number" id="editar-stock" class="border p-2 rounded w-full mb-3" required />
+      
+      <div class="flex justify-end gap-2">
+        <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Guardar Cambios</button>
+        <button id="cancelar" type="button" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+    <header class="w-full  flex flex-col justify-center items-center  bg-blue-900 text-white font-bold shadow-md">
+        <div class="flex items-center justify-center">
+        <img
+          class="rounded-full w-[90px]"
+          src="./img/Gemini_Generated_Image_1q80h61q80h61q80-Photoroom.png"
+          alt=""
+        />
+        <h1 class="text-xl lg:text-2xl font-bold">Super Mercado Feliz</h1>
+        </div>
+        <nav class="w-full justify-around flex pb-2">
+          <a href="#ventas" class="block px-4 py-2 rounded hover:bg-black/50"
+            >💰 Ventas</a
+          >
+          <a href="#productos" class="block px-4 py-2 rounded hover:bg-black/50"
+            >📦 Productos</a
+          >
+          <a href="#usuarios" class="block px-4 py-2 rounded hover:bg-black/50"
+            >👥 Usuarios</a
+          >
+        </nav>
+    </header>
+
+    <main class="flex-1 p-6 ">
+      <!-- Ventas -->
+      <section id="ventas" class="mb-12">
+        <h2 class="text-xl lg:text-2xl font-semibold mb-4">💰 Ventas</h2>
+        <div class="relative overflow-y-auto max-h-[400px] overflow-x-auto shadow-md sm:rounded-lg">
+          <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Id de Venta</th>
+                <th scope="col" class="px-6 py-3">Id de Usuario</th>
+                <th scope="col" class="px-6 py-3">Fecha de Venta</th>
+                <th scope="col" class="px-6 py-3">Total</th>
+                <th scope="col" class="px-6 py-3">Accion</th>
+              </tr>
+            </thead>
+            <tbody id="ventas-container"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!--Productos -->
+      <section id="productos" class="mb-12">
+        <div class="flex justify-between">
+        <h2 class="text-xl lg:text-2xl font-semibold mb-4">📦 Productos</h2>
+        <button id="btn-agregar" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Agregar Producto</button>
+        </div>
+        <div class="relative overflow-y-auto max-h-[400px] overflow-x-auto shadow-md sm:rounded-lg">
+          <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Nombre del Productos</th>
+                <th scope="col" class="px-6 py-3">Descripcion</th>
+                <th scope="col" class="px-6 py-3">Categoria</th>
+                <th scope="col" class="px-6 py-3">Precio</th>
+                <th scope="col" class="px-6 py-3">Stock</th>
+                <th scope="col" class="px-6 py-3">Editar</th>
+              </tr>
+            </thead>
+            <tbody id="productos-container"></tbody>
+          </table>
+        </div>
+      </section>
+      <!-- Usuarios -->
+      <section id="usuarios" class="mb-12">
+        <h2 class="text-xl lg:text-2xl font-semibold mb-4">👥 Usuarios</h2>
+        <div class="relative overflow-y-auto max-h-[400px] overflow-x-auto shadow-md sm:rounded-lg">
+          <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Nombre de Usuarios</th>
+                <th scope="col" class="px-6 py-3">Nombre Completo</th>
+                <th scope="col" class="px-6 py-3">Correo</th>
+                <th scope="col" class="px-6 py-3">Telefono</th>
+                <th scope="col" class="px-6 py-3">Id usuario</th>
+                <th scope="col" class="px-6 py-3">Rol</th>
+                <th scope="col" class="px-6 py-3">Fecha de registro</th>
+                <th scope="col" class="px-6 py-3">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody id="usuarios-container"></tbody>
+          </table>
+        </div></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
